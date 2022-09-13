@@ -1,5 +1,7 @@
 package polymorphism;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -9,7 +11,8 @@ import org.springframework.stereotype.Component;
 public class LgTV implements TV {
 	
 	@Autowired
-	@Qualifier("sony")
+	// @Qualifier("sony") : 아이디로 지정
+	// @Resource(name = "apple")
 	private Speaker speaker;
 	
 	public LgTV() {
