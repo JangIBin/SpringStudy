@@ -3,11 +3,74 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 <!-- Bean에 있으면 객체를 무조건 생성함 -->
 
 	<context:component-scan base-package="com.global.biz"></context:component-scan>
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	
+	
+	
+	<!-- <bean id="log" class="com.global.biz.common.Log4jAdvice"></bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.global.biz..*Impl.*(..))" id="allPointcut"/>
+		<aop:aspect ref="log">
+			<aop:before method="printLogging" pointcut-ref="allPointcut"/>
+		</aop:aspect>
+	
+	</aop:config> -->
+	
+	
+	<!-- <bean id="log" class="com.global.biz.common.Log4jAdvice"></bean> -->
+	<!-- <bean id="before" class="com.global.biz.common.BeforeAdvice"></bean>
+	<bean id="afterReturning" class="com.global.biz.common.AfterReturningAdvice"></bean>
+	<bean id="afterThrowing" class="com.global.biz.common.AfterThrowingAdvice"></bean>
+	<bean id="after" class="com.global.biz.common.AfterAdvice"></bean>
+	<bean id="around" class="com.global.biz.common.AroundAdvice"></bean>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.global.biz..*Impl.get*(..))" id="getPointcut"/>
+		<aop:pointcut expression="execution(* com.global.biz..*Impl.*(..))" id="allPointcut"/>
+		
+		<aop:aspect ref="around">
+			<aop:around method="aroundLog" pointcut-ref="allPointcut"/>
+		</aop:aspect>
+		
+		<aop:aspect ref="after">
+			<aop:after method="finallyLog" pointcut-ref="allPointcut"/>
+		</aop:aspect>
+		
+		<aop:aspect ref="afterThrowing">
+			<aop:after-throwing method="exceptionLog" throwing="exceptionObj" pointcut-ref="allPointcut"/>
+		</aop:aspect>
+		
+		<aop:aspect ref="afterReturning">
+			<aop:after-returning method="afterLog" returning="returnObj" pointcut-ref="getPointcut"/>
+		</aop:aspect>
+		
+		<aop:aspect ref="before">
+			<aop:before method="beforeLog" pointcut-ref="allPointcut"/>
+		</aop:aspect>
+		
+		<aop:aspect ref="log">
+			<aop:before method="printLogging" pointcut-ref="getPointcut"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	
+	<!--
+	<bean id="userService" class="com.global.biz.user.impl.UserServiceImpl">
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+	
+	<bean id="userDAO" class="com.global.biz.user.impl.UserDAO" />
+	 -->
+	
 	
 	<!-- DataSource 설정 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -18,59 +81,6 @@
 	</bean>
 	
 	
-	<!-- <bean class="polymorphism.SonySpeaker"></bean> -->
-
-
-	<!-- <bean id="tv" class="polymorphism.SamsungTV">
-		 <property name="speaker" ref="apple" />
-		 <property name="price" value="27000000"></property>	
-	</bean>
-	 -->
-	 
-	<!-- <bean id="tv" class="polymorphism.SamsungTV" p:speaker-ref="apple" p:price="27000000"></bean>
-	 
-	<bean id="sony" class="polymorphism.SonySpeaker" />
-	<bean id="apple" class="polymorphism.AppleSpeaker" /> -->
-	
-	
-	<!-- <bean id="collectionBean" class="com.global.ioc.injection.CollectionBean">
-		<property name="addressList">
-			
-			<list>
-				<value>서울특별시 영등포구 대림동</value>
-				<value>서울특별시 강남구 역삼동</value>
-			</list>
-		 	
-		 	
-		 	<set value-type="java.lang.String">
-		 		<value>서울특별시 영등포구 대림동</value>
-				<value>서울특별시 강남구 역삼동</value>
-		 	</set>
-		 	
-		 	<map>
-		 		<entry>
-		 			<key>
-		 				<value>장이빈</value>
-		 			</key>
-		 			<value>서울특별시 영등포구 대림동</value>
-		 		</entry>
-		 		<entry>
-		 			<key>
-		 				<value>장감자</value>
-		 			</key>
-		 			<value>서울특별시 강남구 역삼동</value>
-		 		</entry>
-		 	</map>
-		 	
-		 	<props>
-		 		<prop key="장이빈">서울특별시 영등포구 대림동</prop>
-		 		<prop key="장감자">서울특별시 강남구 역삼동</prop>
-		 	</props>
-		 	
-		 	
-		</property>
-		
-	</bean> -->
 	
 	
 </beans>
