@@ -13,7 +13,8 @@ import com.global.biz.board.BoardVO;
 public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardDAOSpring boardDAO;
+	//private BoardDAO boardDAO;
 
 	
 	@Override
@@ -25,6 +26,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		*/
 		
+		boardDAO.insertBoard(vo);
 		boardDAO.insertBoard(vo);
 	}
 
