@@ -1,38 +1,48 @@
 package com.global.view.user;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.global.biz.user.UserVO;
 import com.global.biz.user.impl.UserDAO;
-import com.global.view.controller.Controller;
 
-public class LoginController implements Controller {
+@Controller
+public class LoginController {
+	
+	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
+	public String loginView(@ModelAttribute("user") UserVO vo) {
+		
+		System.out.println("로그인 화면 이동........");
+		vo.setId("test");
+		vo.setPassword("test123");
+		return "login.jsp";
+		
+	}
 
-	@Override
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	public String login(UserVO vo, UserDAO userDAO, HttpSession session) {
 		
-		System.out.println("로그인 처리");
+		System.out.println("로그인 인증 처리");
 		
-		// 사용자 입력 정보 추출
-		String id = request.getParameter("id");
-		String password = request.getParameter("password");
-		
-		// 데이터베이스 연동처리
-		UserVO vo = new UserVO();
-		vo.setId(id);
-		vo.setPassword(password);
-		
-		UserDAO userDAO = new UserDAO();
-		UserVO user = userDAO.getUser(vo);
-		
-		// 화면 네비게이션
-		if(user != null) {
-			return "getBoardList.do";
-		} else {
-			return "login";
+		if(vo.getId() == null || vo.getId().equals("")) {
+			throw new IllegalArgumentException("아이디는 반드시 입력하셔야 로그인 할 수 있습니다");
 		}
 		
+		UserVO user = userDAO.getUser(vo);
+
+		// 화면 네비게이션
+
+		if(user != null) {
+			session.setAttribute("userName", user.getName());
+			return "getBoardList.do";
+		} else {
+			return "login.jsp";
+		}
+
 	}
 
 }
